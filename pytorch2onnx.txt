@@ -1,0 +1,21 @@
+python ./tools/deploy.py \
+    configs/mmpretrain/classification_onnxruntime_static.py \
+    /mnt/mmpretrain/configs/mobilenet_v3/mobilenet-v3-small-050_8xb128_in1k_mydatasets.py \
+    /mnt/mmpretrain/work_dirs/mobilenet-v3-small-050_8xb128_in1k_mydatasets/epoch_495.pth \
+    /mnt/mmpretrain/demo/demo.JPEG \
+    --work-dir work_dir \
+    --device cpu
+
+
+python projects/easydeploy/tools/export.py \
+    configs/yolov5/yolov5_n-v61_syncbn_fast_8xb16-300e_coco.py\
+    yolov5_n-v61_syncbn_fast_8xb16-300e_coco_20220919_090739-b804c1ad.pth \
+    --work-dir work_dirs/yolov5_n-v61_syncbn_fast_8xb16-300e_coco \
+    --img-size 640 640 \
+    --batch 1 \
+    --device cpu \
+python projects/easydeploy/tools/image-demo.py \
+    demo/demo.jpg \
+    configs/yolov5/yolov5_n-v61_syncbn_fast_8xb16-300e_coco.py \
+    work_dirs/yolov5_n-v61_syncbn_fast_8xb16-300e_coco/end2end.onnx \
+    --device cpu
